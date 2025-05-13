@@ -8,8 +8,11 @@ const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 mongoose.connect('mongodb+srv://sreejaosreenivasan:5etPIoWmTfbeSHlK@cluster0.zaliiaj.mongodb.net/models?retryWrites=true&w=majority&appName=Cluster0')
-app.use(cors())
-
+app.use(cors({
+  origin: 'https://3dviewer-sand.vercel.app/', 
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 cloudinary.config({
   cloud_name: 'dabphi7ry',
   api_key: '118764387294448',
@@ -20,8 +23,8 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'glb_models',
-    resource_type: 'raw', // Important for .glb files
-    format: async (req, file) => 'glb', // Force format if needed
+    resource_type: 'raw', 
+    format: async (req, file) => 'glb', 
   },
 });
 
@@ -31,7 +34,7 @@ app.post('/upload', upload.single('model'), async (req, res) => {
   try {
     const model = new Model({
       name: req.file.originalname,
-      url: req.file.path, // Cloudinary returns public URL here
+      url: req.file.path,
     });
 
     await model.save();
