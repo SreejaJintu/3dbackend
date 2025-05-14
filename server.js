@@ -9,7 +9,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 mongoose.connect('mongodb+srv://sreejaosreenivasan:5etPIoWmTfbeSHlK@cluster0.zaliiaj.mongodb.net/models?retryWrites=true&w=majority&appName=Cluster0')
 app.use(cors({
-  origin: 'https://3dviewer-sand.vercel.app/', 
+  origin: 'https://3dviewer-sand.vercel.app', 
   methods: ['GET', 'POST'],
   credentials: true
 }));
@@ -29,6 +29,10 @@ const storage = new CloudinaryStorage({
 });
 
 const upload = multer({ storage })
+
+app.get('/', (req, res) => {
+  res.send('Backend running!');
+});
 
 app.post('/upload', upload.single('model'), async (req, res) => {
   try {
