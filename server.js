@@ -7,7 +7,14 @@ const app = express()
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-mongoose.connect('mongodb+srv://sreejaosreenivasan:5etPIoWmTfbeSHlK@cluster0.zaliiaj.mongodb.net/models?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://sreejaosreenivasan:5etPIoWmTfbeSHlK@cluster0.zaliiaj.mongodb.net/models?retryWrites=true&w=majority&appName=Cluster0', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log('✅ MongoDB connected');
+}).catch((err) => {
+  console.error('❌ MongoDB connection failed:', err);
+});
 app.use(cors({
   origin: 'https://3dviewer-sand.vercel.app', 
   methods: ['GET', 'POST'],
